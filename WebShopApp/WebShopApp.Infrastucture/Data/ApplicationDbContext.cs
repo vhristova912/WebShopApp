@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 using WebShopApp.Infrastucture.Data.Domain;
 
-namespace WebShopApp.Data
+namespace WebShopApp.Infrastucture.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
