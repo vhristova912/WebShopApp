@@ -11,9 +11,7 @@ namespace WebShopApp.Infrastucture.Data.Domain
     public class Brand
     {
         public int Id { get; set; }
-        [Required]
-        [MaxLength(30)]
-        public string BrandName { get; set; } = null!;
-        public virtual IEnumerable<Product> Products { get; set; } = new List<Product>();
+        public string BrandName { get; set; }
+        public virtual IEnumerable<Product> products { get; set; } = new List<Product>();
     }
 }
