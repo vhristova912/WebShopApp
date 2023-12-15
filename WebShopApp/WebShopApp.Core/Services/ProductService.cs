@@ -66,12 +66,31 @@ namespace WebShopApp.Core.Services
 
         public bool RemoveById(int productId)
         {
-            throw new NotImplementedException();
+            var product = GetProductById(productId);
+            if (product==default(Product))
+            {
+                return false;
+            }
+            _context.Remove(product);
+            return _context.SaveChanges() != 0;
         }
 
         public bool Update(int productId, string name, int brandId, int categoryId, string picture, int quantity, decimal price, decimal discount)
         {
-            throw new NotImplementedException();
+           var product=GetProductById(productId);
+            if (product == default(Product))
+            {
+                return false;
+            }
+            product.ProductName = name;
+            product.Brand = _context.Brands.Find(brandId);
+            product.Category = _context.Categories.Find(categoryId);
+            product.Picture = picture;
+            product.Quantity = quantity;
+            product.Price = price;
+            product.Discount = discount;
+            _context.Update(product);
+            return _context.SaveChanges() != 0;
         }
     }
 }
