@@ -26,8 +26,4 @@
     <ProjectReference Include="..\WebShopApp.Infrastucture\WebShopApp.Infrastucture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Category\" />
-  </ItemGroup>
-
 </Project>
