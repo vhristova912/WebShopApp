@@ -65,7 +65,10 @@ namespace WebShopApp.Controllers
                 return View();
             }
         }
-
+        public ActionResult Success()
+        {
+            return View();
+        }
         // GET: ClientController/Edit/5
         public ActionResult Edit(int id)
         {
@@ -88,24 +91,42 @@ namespace WebShopApp.Controllers
         }
 
         // GET: ClientController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            var user=this._userManager.Users.FirstOrDefault(x=>x.Id==id);
+            if (user==null)
+            {
+                return NotFound();
+            }
+            ClientDeleteVM userToDelete = new ClientDeleteVM()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Address = user.Address,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+            return View(userToDelete);
         }
 
         // POST: ClientController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(ClientDeleteVM bindingModel)
         {
-            try
+           string id= bindingModel.Id;
+            var user=await _userManager.FindByIdAsync(id);
+            if (user==null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+            IdentityResult result=await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
             {
-                return View();
+                return RedirectToAction("Success");
             }
+            return NotFound();
         }
     }
 }
